@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Quieres ser mi San Valentín?</title>
+
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+
+    /* Fondo degradado romántico */
+    background: linear-gradient(-45deg, #ff0000, #ff4d6d, #ff758c, #ffb199);
+    background-size: 400% 400%;
+    animation: fondoAnimado 12s ease infinite;
+}
+@keyframes fondoAnimado {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+    h1 {
+        margin-top: 70px;
+        font-size: 3em;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        animation: aparecer 2s ease-in-out;
+    }
+
+    p {
+        font-size: 1.5em;
+        margin: 15px;
+        animation: aparecer 3s ease-in-out;
+    }
+
+    .frase-rayo {
+        font-size: 1.3em;
+        color: yellow;
+        margin-top: 20px;
+        font-style: italic;
+    }
+
+    .botones {
+        margin-top: 40px;
+    }
+
+    button {
+        font-size: 1.2em;
+        padding: 15px 30px;
+        margin: 15px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    #si {
+        background-color: yellow;
+        color: red;
+        font-weight: bold;
+    }
+
+    #no {
+        background-color: white;
+        color: red;
+        position: absolute;
+    }
+
+    #musicaBtn {
+        background-color: black;
+        color: yellow;
+        font-weight: bold;
+    }
+
+    button:hover {
+        transform: scale(1.1);
+    }
+
+    @keyframes aparecer {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .rayo {
+        position: fixed;
+        font-size: 40px;
+        top: -10px;
+        animation: caer linear infinite;
+    }
+
+    @keyframes caer {
+        to { transform: translateY(100vh); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Audios -->
+<audio id="musica" loop>
+    <source src="cancion.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="kachow">
+    <source src="kachow.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="motor">
+    <source src="motor.mp3" type="audio/mpeg">
+</audio>
+
+<h1>⚡ Elizabeth ⚡</h1>
+<p>Desde que llegaste a mi vida, todo va a máxima velocidad...</p>
+<p>Contigo siento que mi corazón hace: ¡KACHOW! 💘</p>
+
+<div class="frase-rayo">
+    Como diría el Rayo McQueen... <br>
+    "La vida es una carrera, pero quiero correrla contigo."
+</div>
+
+<p style="margin-top:30px;">¿Quieres ser mi San Valentín? ❤️</p>
+
+<div class="botones">
+    <button id="si" onclick="respuestaSi()">¡Sí! ⚡💖</button>
+    <button id="no" onmouseover="moverBoton()">No 😢</button>
+    <button id="musicaBtn" onclick="toggleMusica()">🎵 Activar Música</button>
+</div>
+
+<script>
+
+// 🎵 Música
+function toggleMusica() {
+    const musica = document.getElementById("musica");
+    const boton = document.getElementById("musicaBtn");
+
+    if (musica.paused) {
+        musica.play();
+        boton.innerHTML = "⏸️ Pausar Música";
+    } else {
+        musica.pause();
+        boton.innerHTML = "🎵 Activar Música";
+    }
+}
+
+// 💖 Respuesta épica
+function respuestaSi() {
+
+    // vibración en celular
+    if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 400]);
+    }
+
+    // sonido motor
+    const motor = document.getElementById("motor");
+    motor.play();
+
+    setTimeout(() => {
+
+        // sonido kachow
+        document.getElementById("kachow").play();
+
+        document.body.innerHTML = `
+            <h1>🏁 ¡GANÉ LA MEJOR CARRERA! 🏁</h1>
+            <p>Ahora eres oficialmente mi copiloto ❤️</p>
+            <h2 style="color:yellow;font-size:3em;">⚡ KACHOW ⚡</h2>
+        `;
+    }, 1500);
+}
+
+// botón que huye
+function moverBoton() {
+    const botonNo = document.getElementById("no");
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    botonNo.style.left = x + "px";
+    botonNo.style.top = y + "px";
+}
+
+// ⚡ Rayos cayendo
+setInterval(() => {
+    const rayo = document.createElement("div");
+    rayo.classList.add("rayo");
+    rayo.innerHTML = "⚡";
+    rayo.style.left = Math.random() * window.innerWidth + "px";
+    rayo.style.animationDuration = (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(rayo);
+
+    setTimeout(() => {
+        rayo.remove();
+    }, 5000);
+}, 300);
+
+</script>
+
+</body>
+</html>
